@@ -1,0 +1,36 @@
+/* Apply styles to the QMainWindow */
+QMainWindow {
+    background-color: #0df799;
+    
+}
+
+/* Apply styles to labels */
+QLabel {
+    font-size: 14px;
+    color: #333;
+}
+
+/* Apply styles to line edits (text input fields) */
+QLineEdit {
+    padding: 5px;
+    font-size: 14px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Apply styles to buttons */
+QPushButton {
+    padding: 5px 10px;
+    font-size: 14px;
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+}
+
+/* Apply styles to QTextEdit (output text area) */
+QTextEdit {
+    font-size: 14px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+}
