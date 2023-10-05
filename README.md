@@ -27,8 +27,8 @@ pip install PyQt5 requests beautifulsoup4
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/yourusername/pyqt-web-crawler.git
-cd pyqt-web-crawler
+git clone https://github.com/kaiji123/web-crawler.git
+cd web-crawler
 ```
 
 2. Run the application:
