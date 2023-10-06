@@ -57,9 +57,23 @@ class WebCrawlerApp(QMainWindow):
         self.output_text = QTextEdit()
         self.page_limit_label = QLabel("Page Limit:")
         self.page_limit_entry = QLineEdit()
+        self.crawled_results = []
+
+                # Create pagination buttons
+        self.prev_page_button = QPushButton("Previous Page")
+        self.next_page_button = QPushButton("Next Page")
+        self.current_page = 1  # Initialize current page to 1
+
+        # Connect pagination button click events
+        self.prev_page_button.clicked.connect(self.show_previous_page)
+        self.next_page_button.clicked.connect(self.show_next_page)
+
+
 
         # Create layout
         layout = QVBoxLayout()
+        layout.addWidget(self.prev_page_button)
+        layout.addWidget(self.next_page_button)
         layout.addWidget(self.start_url_label)
         layout.addWidget(self.start_url_entry)
         layout.addWidget(self.max_depth_label)
@@ -116,7 +130,7 @@ class WebCrawlerApp(QMainWindow):
             current_url, current_depth = url_queue.pop(0)
 
             # Crawl the page and display results in the GUI
-            crawl_page(current_url, current_depth, robot_parser, self.output_text)
+            crawl_page(current_url, current_depth, robot_parser, self.crawled_results)
 
             # Increment the crawled pages counter
             crawled_pages += 1
@@ -132,6 +146,31 @@ class WebCrawlerApp(QMainWindow):
 
             # Implement rate limiting to respect website's policy
             time.sleep(1 / rate_limit)  # Sleep for the specified rate limit
+        self.display_current_page()
+    
+    def show_previous_page(self):
+        # Decrement current page number
+        self.current_page -= 1
+        if self.current_page < 1:
+            self.current_page = 1
+        self.display_current_page()
+
+    def show_next_page(self):
+        # Increment current page number
+        self.current_page += 1
+        self.display_current_page()
+
+    def display_current_page(self):
+        # Clear the output text
+        self.output_text.clear()
+
+        # Display the content for the current page
+        page_start = (self.current_page - 1) * 10  # Change 10 to the desired number of pages per "pagination"
+        page_end = page_start + 10
+
+        # Display the content for the current page within the range [page_start, page_end)
+        for i in range(page_start, min(page_end, len(self.crawled_results))):
+            self.output_text.append(self.crawled_results[i])
 
 def prioritize_url(url, depth):
     # Assign higher priority to URLs closer to the start URL (lower depth)
